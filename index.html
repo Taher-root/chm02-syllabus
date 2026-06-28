@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHM-02 Introductory Chemistry — Prof. Lisa Chu · Fall 2026</title>
+<style>
+  :root {
+    --teal: #0B7A75;
+    --teal-light: #E1F5EE;
+    --teal-dark: #085041;
+    --teal-mid: #1D9E75;
+    --text: #1a1a1a;
+    --text-muted: #555;
+    --bg: #fff;
+    --surface: #f8faf9;
+    --border: #e0e8e6;
+    --radius: 12px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 17px; line-height: 1.7; color: var(--text); background: var(--bg); }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--teal-dark);
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0;
+    padding: 0 1.5rem;
+  }
+  .nav-brand {
+    font-size: 0.85rem; font-weight: 600; color: #fff; opacity: 0.9;
+    padding: 0.75rem 1rem 0.75rem 0; border-right: 1px solid rgba(255,255,255,0.2);
+    margin-right: 0.5rem; flex-shrink: 0;
+  }
+  nav a {
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    font-size: 0.8rem; font-weight: 500; padding: 0.75rem 0.65rem;
+    white-space: nowrap; transition: color 0.15s;
+  }
+  nav a:hover { color: #fff; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 60%, var(--teal-mid) 100%);
+    color: #fff; padding: 5rem 2rem 4rem;
+    text-align: center;
+  }
+  .hero-badge {
+    display: inline-block; background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3); border-radius: 999px;
+    font-size: 0.8rem; letter-spacing: 0.05em; padding: 0.3rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 700; line-height: 1.15; margin-bottom: 0.75rem; }
+  .hero p { font-size: 1.1rem; opacity: 0.9; }
+  .hero-meta { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+  .meta-chip {
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px; padding: 0.5rem 1.2rem; font-size: 0.85rem;
+  }
+  .meta-chip strong { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.7; margin-bottom: 0.15rem; }
+
+  /* ── SECTIONS ── */
+  section { padding: 4rem 1.5rem; max-width: 840px; margin: 0 auto; }
+  section + section { border-top: 1px solid var(--border); }
+  .section-label {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--teal); margin-bottom: 0.4rem;
+  }
+  h2 { font-size: 1.6rem; font-weight: 700; color: var(--teal-dark); margin-bottom: 1.5rem; line-height: 1.2; }
+  h3 { font-size: 1.05rem; font-weight: 700; color: var(--teal-dark); margin: 1.5rem 0 0.5rem; }
+  p { margin-bottom: 1rem; color: var(--text); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── WELCOME ── */
+  .welcome-grid { display: grid; grid-template-columns: 200px 1fr; gap: 2.5rem; align-items: start; }
+  @media (max-width: 600px) { .welcome-grid { grid-template-columns: 1fr; } }
+  .portrait-wrap { text-align: center; }
+  .portrait {
+    width: 160px; height: 160px; border-radius: 50%; object-fit: cover;
+    border: 4px solid var(--teal); display: block; margin: 0 auto 0.75rem;
+    background: var(--teal-light);
+  }
+  .portrait-placeholder {
+    width: 160px; height: 160px; border-radius: 50%;
+    border: 4px dashed var(--teal); display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 0.75rem; background: var(--teal-light); color: var(--teal);
+    font-size: 0.75rem; text-align: center; line-height: 1.3; padding: 1rem;
+  }
+  .caption { font-size: 0.78rem; color: var(--text-muted); font-style: italic; }
+  .letter { background: var(--surface); border-left: 4px solid var(--teal); border-radius: 0 var(--radius) var(--radius) 0; padding: 1.5rem 1.75rem; }
+  .letter p { font-size: 0.97rem; }
+  .letter .sig { margin-top: 1.25rem; font-weight: 600; }
+
+  /* ── INFO CARDS ── */
+  .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .info-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.25rem;
+  }
+  .info-card .label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); margin-bottom: 0.25rem; }
+  .info-card .value { font-size: 0.95rem; color: var(--text); }
+
+  /* ── PHILOSOPHY ── */
+  .philosophy-layout { display: grid; grid-template-columns: 1fr 220px; gap: 2.5rem; align-items: start; }
+  @media (max-width: 640px) { .philosophy-layout { grid-template-columns: 1fr; } .photo-right { order: -1; } }
+  .photo-right img, .photo-right .photo-placeholder {
+    width: 100%; border-radius: var(--radius); object-fit: cover;
+  }
+  .photo-placeholder {
+    border: 2px dashed var(--border); border-radius: var(--radius);
+    background: var(--surface); display: flex; align-items: center; justify-content: center;
+    color: var(--text-muted); font-size: 0.78rem; text-align: center;
+    padding: 2rem 1rem; min-height: 200px;
+  }
+  blockquote { border-left: 3px solid var(--teal-mid); padding-left: 1.25rem; color: var(--text); margin: 0.5rem 0 1rem; }
+  blockquote p { font-size: 0.97rem; }
+
+  /* ── AGREEMENT ── */
+  .agreement-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem; }
+  @media (max-width: 600px) { .agreement-grid { grid-template-columns: 1fr; } }
+  .agreement-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+  .agreement-box h3 { margin-top: 0; font-size: 0.95rem; }
+  .agreement-box ol { padding-left: 1.3rem; }
+  .agreement-box li { margin-bottom: 0.65rem; font-size: 0.93rem; }
+  .agreement-box li:last-child { margin-bottom: 0; }
+
+  /* ── SCHEDULE ── */
+  .topic-list { list-style: none; padding: 0; margin: 0 0 2rem; }
+  .topic-list li {
+    display: flex; align-items: baseline; gap: 0.75rem;
+    padding: 0.55rem 0; border-bottom: 1px solid var(--border);
+    font-size: 0.93rem;
+  }
+  .topic-list li:last-child { border-bottom: none; }
+  .week-num {
+    flex-shrink: 0; width: 1.6rem; height: 1.6rem; border-radius: 50%;
+    background: var(--teal-light); color: var(--teal-dark);
+    font-size: 0.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+  }
+  .week-num.exam { background: var(--teal); color: #fff; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+  th { background: var(--teal-dark); color: #fff; text-align: left; padding: 0.6rem 1rem; font-weight: 600; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  th:first-child { border-radius: 8px 0 0 8px; }
+  th:last-child { border-radius: 0 8px 8px 0; }
+  td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--border); }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: var(--surface); }
+  .grade-tag { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.75rem; }
+
+  /* ── POLICIES ── */
+  .policy-block { margin-bottom: 2rem; }
+  .policy-block h3 { border-bottom: 2px solid var(--teal-light); padding-bottom: 0.4rem; }
+
+  /* ── RESOURCES ── */
+  .resource-list { list-style: none; padding: 0; }
+  .resource-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding: 1rem 1.25rem; border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 0.75rem;
+    background: var(--surface); transition: border-color 0.15s;
+  }
+  .resource-item:hover { border-color: var(--teal); }
+  .resource-icon {
+    flex-shrink: 0; width: 38px; height: 38px; border-radius: 8px;
+    background: var(--teal-light); display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .resource-item h3 { margin: 0 0 0.15rem; font-size: 0.95rem; }
+  .resource-item a { color: var(--teal-dark); text-decoration: none; font-weight: 600; }
+  .resource-item a:hover { text-decoration: underline; }
+  .resource-item p { font-size: 0.85rem; color: var(--text-muted); margin: 0; }
+  .crisis-note { background: #fff3cd; border: 1px solid #e6c84a; border-radius: 8px; padding: 0.75rem 1rem; font-size: 0.85rem; margin-top: 0.5rem; color: #6b4f00; }
+
+  /* ── ABOUT PHOTO ── */
+  .about-layout { display: grid; grid-template-columns: 1fr 220px; gap: 2.5rem; align-items: start; }
+  @media (max-width: 640px) { .about-layout { grid-template-columns: 1fr; } }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--teal-dark); color: rgba(255,255,255,0.7);
+    text-align: center; padding: 2rem 1.5rem; font-size: 0.82rem; margin-top: 2rem;
+  }
+  footer a { color: rgba(255,255,255,0.9); }
+  footer p { margin: 0.25rem 0; }
+
+  /* ── UTIL ── */
+  .pill { display: inline-block; background: var(--teal-light); color: var(--teal-dark); border-radius: 999px; padding: 0.2rem 0.75rem; font-size: 0.78rem; font-weight: 600; margin-right: 0.4rem; }
+  .intro-text { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+  .photo-credit { font-size: 0.75rem; color: var(--text-muted); font-style: italic; margin-top: 0.5rem; text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav aria-label="Site navigation">
+  <div class="nav-brand">CHM-02 · Fall 2026</div>
+  <a href="#welcome">Welcome</a>
+  <a href="#about">About</a>
+  <a href="#philosophy">Philosophy</a>
+  <a href="#agreement">Agreement</a>
+  <a href="#schedule">Schedule</a>
+  <a href="#policies">Policies</a>
+  <a href="#resources">Resources</a>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero" id="top">
+  <div class="hero-badge">Mission College · Fall 2026</div>
+  <h1>Introductory Chemistry<br>CHM-02</h1>
+  <p>Your syllabus, your roadmap, your community.</p>
+  <div class="hero-meta">
+    <div class="meta-chip"><strong>Instructor</strong>Professor Lisa Chu</div>
+    <div class="meta-chip"><strong>Meets</strong>Tue &amp; Thu · 5:30 PM · SCI-120</div>
+    <div class="meta-chip"><strong>First Day</strong>August 25, 2026</div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════
+     PAGE 1 — WELCOME
+════════════════════════════════════════ -->
+<section id="welcome">
+  <div class="section-label">Welcome</div>
+  <h2>A note from Professor Lisa</h2>
+
+  <div class="welcome-grid">
+    <!-- PHOTO — replace src with your actual image path, e.g. images/prof-chu-mochi.png -->
+    <div class="portrait-wrap">
+      <img
+        src="images/prof-chu-mochi.png"
+        alt="Professor Lisa Chu smiling in sunglasses with her small white dog Mochi, who is wearing red glasses."
+        class="portrait"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      >
+      <div class="portrait-placeholder" style="display:none;">
+        📸 Add<br>prof-chu-mochi.png<br>to /images/
+      </div>
+      <p class="caption">Prof. Chu and Mochi —<br>your CHM-02 welcoming committee.</p>
+    </div>
+
+    <!-- WELCOME LETTER -->
+    <div class="letter">
+      <p>Dear Students,</p>
+      <p>I am excited to be your instructor for CHM&#8209;02, Introductory Chemistry for the Fall 2026 semester. The first day of classes is on <strong>Tuesday, August 25, 2026</strong>. We will meet in person in <strong>SCI-120 at 5:30 PM</strong> on Tuesdays and Thursdays.</p>
+      <p>This website is our syllabus and shared roadmap for the semester — it explains what we'll learn, how you'll be graded, our agreements with each other, and the many ways to get support. Please read through it; coming back to it often will help you stay on track and feel confident about what's ahead.</p>
+      <p>Ahead of the first week of class, please log into the course page on <strong>Canvas</strong>. Look around to review the syllabus, required textbook, and other important class information. Assignments will be given in week 1 but <em>not due until week 2</em>.</p>
+      <p>Please arrive to the first day of class with an open mind and ready to learn! It helps to have access to the required textbook, materials for taking notes, and a physical copy of the periodic table (available on the course page).</p>
+      <p>I look forward to meeting you on the first day of class!</p>
+      <p class="sig">Very best,<br>Professor Lisa</p>
+      <p style="font-size:0.85rem; color: var(--text-muted); margin-top:0.75rem;">P.S. The pup in the photo is Mochi, the unofficial CHM-02 mascot. 🐾</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PAGE 2 — ABOUT THIS COURSE
+════════════════════════════════════════ -->
+<section id="about">
+  <div class="section-label">About This Course</div>
+  <h2>What is CHM-02?</h2>
+
+  <div class="about-layout">
+    <div>
+      <p class="intro-text">CHM-02 introduces the fundamental principles of chemistry — atomic theory, bonding, molecular structure, reactions, stoichiometry, gases, acids, bases, and solutions. It emphasizes problem-solving and prepares you for CHEM-01A.</p>
+      <p>You don't have to be a "chemistry person" already. This course is built to get you there.</p>
+
+      <div class="info-grid" style="margin-top:1.5rem;">
+        <div class="info-card">
+          <div class="label">First Day of Class</div>
+          <div class="value">Tuesday, August 25, 2026</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Log into Canvas by</div>
+          <div class="value">Before Aug 25 — a few days early is ideal</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Live Sessions</div>
+          <div class="value">In person · Tue &amp; Thu · 5:30 PM · SCI-120</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Week 1 Due Dates</div>
+          <div class="value">Nothing is due in week 1 — first assignments due week 2</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Required Textbook</div>
+          <div class="value"><em>Introductory Chemistry (An Atoms First Approach)</em>, 2nd Ed. — Burdge &amp; Driessen (McGraw-Hill)</div>
+        </div>
+        <div class="info-card">
+          <div class="label">Other Materials</div>
+          <div class="value">Scientific calculator · Periodic table (download from Canvas)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Replace src with images/prof-chu-mochi-indoors.jpeg -->
+    <div class="photo-right">
+      <img
+        src="images/prof-chu-mochi-indoors.jpeg"
+        alt="Professor Chu smiling and holding her white dog Mochi."
+        style="width:100%; border-radius:12px; object-fit:cover;"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      >
+      <div class="photo-placeholder" style="display:none; min-height:220px;">
+        📸 Add<br>prof-chu-mochi-indoors.jpeg<br>to /images/
+      </div>
+      <p class="photo-credit">Personal photo courtesy of Prof. L. Chu</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PAGE 3 — MY TEACHING PHILOSOPHY
+════════════════════════════════════════ -->
+<section id="philosophy">
+  <div class="section-label">My Teaching Philosophy</div>
+  <h2>How I approach teaching — and learning</h2>
+
+  <div class="philosophy-layout">
+    <div>
+      <blockquote>
+        <p>I believe every student can learn chemistry when they're met with respect, clear guidance, and genuine support. My job isn't to weed people out — it's to help you build understanding step by step and to remove the obstacles that get in the way of learning.</p>
+      </blockquote>
+      <p>I'll keep the course organized and transparent, so you always know what we're doing and why. I'll explain ideas in more than one way, welcome your questions, and check in when I sense you could use support. I see mistakes — yours and mine — as a normal, useful part of learning, not as failures.</p>
+      <p>Most of all, I want this classroom to be a place where you feel you belong and where your effort pays off. If something isn't working for you, tell me, and we'll figure it out together. Your success is my goal, and I'll do my part to help you reach it.</p>
+    </div>
+
+    <!-- Replace src with images/prof-chu-labcoat.jpeg -->
+    <div class="photo-right">
+      <img
+        src="images/prof-chu-labcoat.jpeg"
+        alt="Professor Chu wearing a lab coat with a NASA mission patch."
+        style="width:100%; border-radius:12px; object-fit:cover;"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+      >
+      <div class="photo-placeholder" style="display:none; min-height:220px;">
+        📸 Add<br>prof-chu-labcoat.jpeg<br>to /images/
+      </div>
+      <p class="photo-credit">Personal photo courtesy of Prof. L. Chu</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PAGE 4 — OUR AGREEMENT
+════════════════════════════════════════ -->
+<section id="agreement">
+  <div class="section-label">Our Agreement</div>
+  <h2>What we commit to each other</h2>
+  <p class="intro-text">A course works best when everyone knows what to expect. These are our shared commitments.</p>
+
+  <div class="agreement-grid">
+    <div class="agreement-box">
+      <h3>What you can expect of me</h3>
+      <ol>
+        <li>I will treat you with dignity and respect and be flexible to support your individual needs.</li>
+        <li>I will provide a clear, organized course designed to ensure you meet our course outcomes in a meaningful way.</li>
+        <li>I will provide a supportive and safe environment for you to share and discuss ideas with your peers.</li>
+        <li>I will reach out to you when I sense that you need support.</li>
+        <li>I won't be perfect. I am human and will make mistakes at times — and I'll view them as opportunities to learn and grow.</li>
+      </ol>
+    </div>
+    <div class="agreement-box">
+      <h3>What I will expect of you</h3>
+      <ol>
+        <li>You will treat me and your peers with dignity and respect.</li>
+        <li>You will maintain an open line of communication with me so I understand how to support you.</li>
+        <li>You will strive to contribute regularly to collaborative activities, so others also have room to read, reflect, and respond.</li>
+        <li>You will do your best to have patience with technology. There will be hiccups — expect them, and we'll get through them together.</li>
+        <li>You will give yourself grace. Expect to make mistakes; you are human, and mistakes are part of learning and growing.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Optional hiking photo -->
+  <div style="margin-top:2rem; display:flex; gap:1rem; align-items:flex-start; flex-wrap:wrap;">
+    <img
+      src="images/prof-chu-hiking.jpeg"
+      alt="Professor Chu hiking on a trail overlooking a deep-blue mountain lake."
+      style="width:220px; border-radius:12px; object-fit:cover; flex-shrink:0;"
+      onerror="this.style.display='none';"
+    >
+    <div style="font-size:0.82rem; color:var(--text-muted); font-style:italic; align-self:flex-end;">Personal photo courtesy of Prof. L. Chu</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PAGE 5 — COURSE SCHEDULE
+════════════════════════════════════════ -->
+<section id="schedule">
+  <div class="section-label">Course Schedule</div>
+  <h2>Semester at a Glance</h2>
+  <p class="intro-text">Exact calendar dates will be posted on Canvas. The chapter sequence below maps to our Fall 2026 Tue/Thu sessions.</p>
+
+  <ul class="topic-list">
+    <li><span class="week-num">1</span>Orientation &amp; Syllabus · Ch. 4 How Chemists Use Numbers</li>
+    <li><span class="week-num">2</span>Ch. 1 Atoms and Elements</li>
+    <li><span class="week-num">3</span>Ch. 2 Electrons and the Periodic Table</li>
+    <li><span class="week-num">4</span>Ch. 3 Compounds and Chemical Bonds</li>
+    <li><span class="week-num exam">5</span><strong>Midterm 1 (Ch. 1–4)</strong> · Ch. 5 The Mole and Chemical Formulas</li>
+    <li><span class="week-num">6</span>Ch. 6 Molecular Shape</li>
+    <li><span class="week-num">7</span>Ch. 7 Solids, Liquids, and Phase Changes</li>
+    <li><span class="week-num exam">8</span>Ch. 8 Gases · <strong>Midterm 2 (Ch. 5–8)</strong></li>
+    <li><span class="week-num">9</span>Ch. 9 Physical Properties of Solutions</li>
+    <li><span class="week-num">10</span>Ch. 10 Chemical Reactions and Equations</li>
+    <li><span class="week-num">11</span>Ch. 11 Using Balanced Chemical Equations</li>
+    <li><span class="week-num">12</span>Ch. 12 Acids and Bases · Final Review</li>
+    <li><span class="week-num exam">13</span><strong>Final Exam (Ch. 1–12)</strong></li>
+  </ul>
+
+  <h3>Grade Breakdown</h3>
+  <table>
+    <thead>
+      <tr><th>Component</th><th>Weight</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Attendance, Class Activities &amp; Participation</td><td>15%</td></tr>
+      <tr><td>Homework</td><td>10%</td></tr>
+      <tr><td>Quizzes</td><td>10%</td></tr>
+      <tr><td>Midterm 1</td><td>15%</td></tr>
+      <tr><td>Midterm 2</td><td>20%</td></tr>
+      <tr><td>Final Exam</td><td>30%</td></tr>
+    </tbody>
+  </table>
+  <p class="grade-tag">Letter grades: <strong>A</strong> 90–100 · <strong>B</strong> 80–89 · <strong>C</strong> 70–79 · <strong>D</strong> 60–69 · <strong>F</strong> below 60</p>
+</section>
+
+<!-- ══════════════════════════════════════
+     PAGE 6 — COURSE POLICIES
+════════════════════════════════════════ -->
+<section id="policies">
+  <div class="section-label">Course Policies</div>
+  <h2>How this course works</h2>
+  <p class="intro-text">These policies are designed to support your success — not to trip you up. When in doubt, reach out.</p>
+
+  <div class="policy-block">
+    <h3>Homework — effort-based</h3>
+    <p>Homework is mostly <strong>effort-based</strong>: attempt and complete it and you'll earn most of the credit (I spot-check for completion and accuracy). It's one of the best ways to prepare for quizzes and exams. If something doesn't click, please ask me, a classmate, or a tutor — seeking help is exactly the right move.</p>
+  </div>
+
+  <div class="policy-block">
+    <h3>Exams</h3>
+    <p>Because chemistry builds on itself, exams are cumulative, and all dates are shared up front so you can plan ahead. If you have an unavoidable, documented situation and let me know <em>in advance</em>, I'll work with you on options such as an early exam.</p>
+  </div>
+
+  <div class="policy-block">
+    <h3>Academic Integrity</h3>
+    <p>Academic integrity makes grades meaningful and keeps our learning environment fair. Please do your work honestly and independently unless collaboration is clearly allowed. If you're ever unsure what help, collaboration, citation, or technology (including AI tools) is permitted — <strong>ask before the due date.</strong> Asking is always welcome. If I have a concern, I'll talk with you first and follow college procedures.</p>
+  </div>
+
+  <div class="policy-block">
+    <h3>Attendance &amp; Communication</h3>
+    <p>Attending regularly really helps you succeed, and I know life happens. If something may affect your participation — work, health, transportation, caregiving, tech — reach out as early as you can and we'll find options together. You don't need to share private details, just enough for me to help.</p>
+  </div>
+
+  <div class="policy-block">
+    <h3>Our Classroom Community</h3>
+    <p>We share responsibility for a respectful, inclusive space where everyone can focus and participate. Treat one another with kindness, give others room to contribute, and use devices in ways that support learning. Every student has the right to learn free from discrimination and harassment.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     PAGE 7 — SUPPORT & RESOURCES
+════════════════════════════════════════ -->
+<section id="resources">
+  <div class="section-label">Support &amp; Resources</div>
+  <h2>Getting Help — You're Not Alone</h2>
+  <p class="intro-text">Using campus support is a <strong>strength, not a sign of failure.</strong> Reach out early — these services are free and here for you.</p>
+
+  <ul class="resource-list" aria-label="Campus support resources">
+
+    <li class="resource-item">
+      <div class="resource-icon" aria-hidden="true">📚</div>
+      <div>
+        <h3><a href="https://missioncollege.edu/depts/academic-support/" target="_blank" rel="noopener">Academic Support Center — free tutoring</a></h3>
+        <p>Drop-in and appointment tutoring, learning strategies, and feedback on assignments.</p>
+      </div>
+    </li>
+
+    <li class="resource-item">
+      <div class="resource-icon" aria-hidden="true">🏛️</div>
+      <div>
+        <h3><a href="https://missioncollege.edu/library/" target="_blank" rel="noopener">Library — research &amp; study support</a></h3>
+        <p>Books, databases, study spaces, and research help.</p>
+      </div>
+    </li>
+
+    <li class="resource-item">
+      <div class="resource-icon" aria-hidden="true">🎓</div>
+      <div>
+        <h3><a href="https://missioncollege.edu/student-services/counseling/index.html" target="_blank" rel="noopener">Counseling — academic, transfer &amp; career</a></h3>
+        <p>Plan your courses, transfer, and goals with a professional counselor.</p>
+      </div>
+    </li>
+
+    <li class="resource-item">
+      <div class="resource-icon" aria-hidden="true">💛</div>
+      <div>
+        <h3><a href="https://missioncollege.edu/student_services/health-services/mental-health/" target="_blank" rel="noopener">Mental Health Counseling</a></h3>
+        <p>Up to 8 free, confidential sessions each semester.</p>
+        <div class="crisis-note">
+          In crisis? Text <strong>HOME</strong> to <strong>741741</strong>, or call the Santa Clara County Crisis Line at <strong>1-855-278-4204</strong> (24/7).
+        </div>
+      </div>
+    </li>
+
+    <li class="resource-item">
+      <div class="resource-icon" aria-hidden="true">♿</div>
+      <div>
+        <h3><a href="https://missioncollege.edu/student-services/disability-support-programs/index.html" target="_blank" rel="noopener">Disability Support Programs &amp; Services (DSPS)</a></h3>
+        <p>Accommodations and access support. Voice: 408-855-5085 · Email: <a href="mailto:dsps@missioncollege.edu">dsps@missioncollege.edu</a></p>
+      </div>
+    </li>
+
+    <li class="resource-item">
+      <div class="resource-icon" aria-hidden="true">🛒</div>
+      <div>
+        <h3><a href="https://missioncollege.edu/student-services/basic-needs/index.html" target="_blank" rel="noopener">Basic Needs &amp; Mission Market food pantry</a></h3>
+        <p>Food, housing, and emergency support so basic needs don't get in the way of learning.</p>
+      </div>
+    </li>
+
+    <li class="resource-item">
+      <div class="resource-icon" aria-hidden="true">💻</div>
+      <div>
+        <h3>
+          <a href="https://missioncollege.edu/online-learning/canvas.html" target="_blank" rel="noopener">Canvas &amp; Online Learning</a>
+          &amp;
+          <a href="https://missioncollege.edu/student_services/help-desk.html" target="_blank" rel="noopener">Student Help Desk (tech support)</a>
+        </h3>
+        <p>Help logging in, navigating Canvas, and submitting assignments.</p>
+      </div>
+    </li>
+
+  </ul>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p><strong style="color:#fff;">CHM-02 · Introductory Chemistry · Fall 2026</strong></p>
+  <p>Prof. Lisa Chu · Mission College · SCI-120 · Tue &amp; Thu 5:30 PM</p>
+  <p style="margin-top:0.75rem;">Personal photos courtesy of Prof. L. Chu · Site built with equity-minded pedagogy in mind.</p>
+</footer>
+
+</body>
+</html>
